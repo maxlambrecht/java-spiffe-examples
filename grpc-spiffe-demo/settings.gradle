@@ -1,0 +1,8 @@
+import org.gradle.internal.os.OperatingSystem
+gradle.ext.isMacOsX = OperatingSystem.current().isMacOsX()
+
+rootProject.name = 'grpc-spiffe-demo'
+include 'grpc-server'
+include 'grpc-client'
+include 'grpc-service-def'
+

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}" src="js/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Tasks</h1>
+
+    <div class="row col-md-7 table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="tasks : ${tasks}">
+                <td th:text="${tasks.id}">1</td>
+                <td th:text="${tasks.title}">Test</td>
+                <td>
+                    <a href="/tasksEdit/1" th:href="@{/tasks/edit/__${tasks.id}__}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="/tasksEdit/1" th:href="@{/tasks/delete/__${tasks.id}__}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+                </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <a href="/tasksEdit" th:href="@{/tasks/new}" class="btn btn-primary">New Task</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

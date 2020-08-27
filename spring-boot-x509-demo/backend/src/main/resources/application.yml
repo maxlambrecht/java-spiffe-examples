@@ -1,0 +1,7 @@
+server:
+  port: 8000
+  ssl:
+    key-store-type: Spiffe
+    key-store:
+    key-store-password:
+    client-auth: need
