@@ -8,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -20,10 +21,12 @@ public class TasksService {
     String tasksUrl;
 
     @Autowired
-    RestOperations restOperations;
+    RestOperations restOperationsTls;
+
+    RestOperations restOperations = new RestTemplate();
 
     public List<Task> findAll() {
-        ResponseEntity<List<Task>> tasks = restOperations.exchange(tasksUrl,
+        ResponseEntity<List<Task>> tasks = restOperationsTls.exchange(tasksUrl,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<Task>>(){});
@@ -32,15 +35,15 @@ public class TasksService {
 
     public Task getOne(Long id) {
         String url = tasksUrl + "/%s";
-        return restOperations.getForObject(format(url, id), Task.class);
+        return restOperationsTls.getForObject(format(url, id), Task.class);
     }
 
     public Task save(Task task) {
-        return restOperations.postForObject(tasksUrl, task, Task.class);
+        return restOperationsTls.postForObject(tasksUrl, task, Task.class);
     }
 
     public void deleteById(Long id) {
         String url = tasksUrl + "/%s";
-        restOperations.delete(format(url, id));
+        restOperationsTls.delete(format(url, id));
     }
 }

@@ -25,6 +25,7 @@ public class ClientApp {
 
     public static void main(String[] args) throws X509SourceException, SocketEndpointAddressException, SSLException {
 
+        // mTLS using Java SPIFFE  //////////////
         X509Source x509Source = DefaultX509Source.newSource();
         KeyManager keyManager = new SpiffeKeyManager(x509Source);
         TrustManager trustManager = new SpiffeTrustManager(x509Source);
@@ -41,12 +42,19 @@ public class ClientApp {
                 .sslContext(sslContext)
                 .maxRetryAttempts(0)
                 .build();
+        // mTLS using Java SPIFFE  //////////////
+
+        /* without mTLS
+        ManagedChannel channel = NettyChannelBuilder.forAddress("localhost", 9000)
+                .maxRetryAttempts(0)
+                .build();
+         */
 
         GreetingServiceGrpc.GreetingServiceBlockingStub stub = GreetingServiceGrpc.newBlockingStub(channel);
 
         HelloRequest request = HelloRequest.newBuilder().setName("SPIFFE Service").build();
         HelloResponse response = stub.greeting(request);
 
-        log.info(response.getGreeting());
+        log.info("Message from Server: " + response.getGreeting());
     }
 }

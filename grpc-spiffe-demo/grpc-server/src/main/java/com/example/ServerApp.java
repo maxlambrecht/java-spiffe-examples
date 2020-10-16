@@ -26,6 +26,7 @@ public class ServerApp {
 
     public static void main(String[] args) throws IOException, InterruptedException, X509SourceException, SocketEndpointAddressException {
 
+        // mTLS using Java SPIFFE  //////////////
         X509Source x509Source = DefaultX509Source.newSource();
         KeyManager keyManager = new SpiffeKeyManager(x509Source);
         TrustManager trustManager = new SpiffeTrustManager(x509Source);
@@ -44,6 +45,13 @@ public class ServerApp {
                 .sslContext(sslContext)
                 .addService(new GreetingServiceImpl())
                 .build();
+        // mTLS using Java SPIFFE  //////////////
+
+        /* without mTLS
+        Server server = NettyServerBuilder.forPort(9000)
+                .addService(new GreetingServiceImpl())
+                .build();
+         */
 
         server.start();
         log.info("Server started!");

@@ -2,11 +2,37 @@
 
 A bunch of [java-spiffe](https://github.com/spiffe/java-spiffe) use examples
 
+## Before running the examples
 
-## Prerequisites
+To run this example, a SPIRE Server needs to be running configured with a `NodeAttestor "join_token"` (use the config file
+that is bundled with the distribution). The agent is configured with a `WorkloadAttestor "unix"`.
 
-* A `spire-server` and a `spire-agent` running, providing an identity with
-a SPIFFE ID = `spiffe://example.org/myservice`.
+#### Create SPIRE Registration Entry
 
-* A `SPIFFE_ENDPOINT_SOCKET` variable defined in the environment pointing to
-agent endpoint: `unix:/tmp/agent.cok`
+```
+./spire-server entry create -parentID spiffe://example.org/host -spiffeID spiffe://example.org/myservice -ttl 300 -selector unix:uid:1000
+```
+
+Change the UID to the one you will use to run the examples.
+
+For the sake of simplicity the example uses the same identity (`myservice`) for both the frontend and backend apps.
+
+#### Run SPIRE Agent
+
+Create a join token:
+```
+TOKEN=$(./spire-server token generate -spiffeID spiffe://example.org/host | awk -F'Token: ' '{print $2}')
+```
+
+Start the agent using the join token to connect to the server:
+
+```
+./spire-agent run -joinToken $TOKEN
+```
+
+#### Define environment variable to point to Socket Endpoint
+
+```
+export SPIFFE_ENDPOINT_SOCKET=unix:/tmp/agent.sock
+```
+
