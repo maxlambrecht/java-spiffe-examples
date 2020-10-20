@@ -7,6 +7,7 @@ import io.grpc.Server;
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NettyServerBuilder;
 import io.grpc.stub.StreamObserver;
+import io.netty.handler.ssl.ClientAuth;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.spiffe.exception.SocketEndpointAddressException;
@@ -39,6 +40,7 @@ public class ServerApp {
         SslContext sslContext =
                 GrpcSslContexts
                         .configure(sslContextBuilder)
+                        .clientAuth(ClientAuth.REQUIRE)
                         .build();
 
         Server server = NettyServerBuilder.forPort(9000)

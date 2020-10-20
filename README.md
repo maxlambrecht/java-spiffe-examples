@@ -4,8 +4,21 @@ A bunch of [java-spiffe](https://github.com/spiffe/java-spiffe) use examples
 
 ## Before running the examples
 
-To run this example, a SPIRE Server needs to be running configured with a `NodeAttestor "join_token"` (use the config file
-that is bundled with the distribution). The agent is configured with a `WorkloadAttestor "unix"`.
+To run the examples, a SPIRE Server and Agent need to be running.
+
+### Run SPIRE
+
+Download the latest SPIRE from [releases github page](https://github.com/spiffe/spire/releases) and extract the tar file.
+
+Copy the content of [spire/conf](spire/conf) in the SPIRE conf folder. 
+
+#### Run SPIRE Server
+
+In a terminal in the SPIRE root folder run:
+
+```
+./spire-server run
+```
 
 #### Create SPIRE Registration Entry
 
@@ -13,7 +26,7 @@ that is bundled with the distribution). The agent is configured with a `Workload
 ./spire-server entry create -parentID spiffe://example.org/host -spiffeID spiffe://example.org/myservice -ttl 300 -selector unix:uid:1000
 ```
 
-Change the UID to the one you will use to run the examples.
+Change the UID to the UID of the user you will use to run the examples.
 
 For the sake of simplicity the example uses the same identity (`myservice`) for both the frontend and backend apps.
 
@@ -35,4 +48,7 @@ Start the agent using the join token to connect to the server:
 ```
 export SPIFFE_ENDPOINT_SOCKET=unix:/tmp/agent.sock
 ```
+
+This environment variable is used by the java-spiffe library as a default socket endpoint address to connect to the SPIRE Agent.
+
 

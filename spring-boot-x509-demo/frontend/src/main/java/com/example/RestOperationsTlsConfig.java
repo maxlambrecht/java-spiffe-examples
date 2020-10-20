@@ -50,21 +50,12 @@ public class RestOperationsTlsConfig {
     SSLContext sslContext(X509Source x509Source, Supplier<Set<SpiffeId>> acceptedSpiffeIds) throws KeyManagementException, NoSuchAlgorithmException {
         SslContextOptions options = SslContextOptions.builder()
                 .x509Source(x509Source)
-//                .acceptAnySpiffeId()
-                .acceptedSpiffeIdsSupplier(acceptedSpiffeIds)
+                .acceptAnySpiffeId()
                 .build();
         return SpiffeSslContextFactory.getSslContext(options);
     }
 
     @Bean X509Source x509Source() throws X509SourceException, SocketEndpointAddressException {
         return DefaultX509Source.newSource();
-    }
-
-    @Bean
-    Supplier<Set<SpiffeId>> acceptedSpiffeIds() {
-        return () -> {
-            final var spiffeId = SpiffeId.parse("spiffe://example.org/myservice");
-            return Collections.singleton(spiffeId);
-        };
     }
 }

@@ -40,14 +40,11 @@ public class ClientApp {
 
         ManagedChannel channel = NettyChannelBuilder.forAddress("localhost", 9000)
                 .sslContext(sslContext)
-                .maxRetryAttempts(0)
                 .build();
         // mTLS using Java SPIFFE  //////////////
 
         /* without mTLS
-        ManagedChannel channel = NettyChannelBuilder.forAddress("localhost", 9000)
-                .maxRetryAttempts(0)
-                .build();
+        ManagedChannel channel = NettyChannelBuilder.forAddress("localhost", 9000).build();
          */
 
         GreetingServiceGrpc.GreetingServiceBlockingStub stub = GreetingServiceGrpc.newBlockingStub(channel);
