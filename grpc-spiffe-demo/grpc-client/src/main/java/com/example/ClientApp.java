@@ -32,19 +32,25 @@ public class ClientApp {
 
         SslContext sslContext =
                 GrpcSslContexts
-                .forClient()
-                .keyManager(keyManager)
-                .trustManager(trustManager)
-                .clientAuth(ClientAuth.REQUIRE)
-                .build();
+                        .forClient()
+                        .keyManager(keyManager)
+                        .trustManager(trustManager)
+                        .clientAuth(ClientAuth.REQUIRE)
+                        .build();
 
-        ManagedChannel channel = NettyChannelBuilder.forAddress("localhost", 9000)
-                .sslContext(sslContext)
-                .build();
+        ManagedChannel channel =
+                NettyChannelBuilder
+                        .forAddress("localhost", 9000)
+                        .sslContext(sslContext)
+                        .build();
         // mTLS using Java SPIFFE  //////////////
 
         /* without mTLS
-        ManagedChannel channel = NettyChannelBuilder.forAddress("localhost", 9000).build();
+        ManagedChannel channel =
+                NettyChannelBuilder
+                        .forAddress("localhost", 9000)
+                        .usePlaintext()
+                        .build();
          */
 
         GreetingServiceGrpc.GreetingServiceBlockingStub stub = GreetingServiceGrpc.newBlockingStub(channel);
