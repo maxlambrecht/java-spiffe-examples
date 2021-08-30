@@ -3,6 +3,7 @@ package com.example;
 import com.example.grpc.GreetingServiceGrpc;
 import com.example.grpc.HelloRequest;
 import com.example.grpc.HelloResponse;
+import com.google.common.collect.Sets;
 import io.grpc.Server;
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NettyServerBuilder;
@@ -28,7 +29,10 @@ public class ServerApp {
     public static void main(String[] args) throws IOException, InterruptedException, X509SourceException, SocketEndpointAddressException {
 
         // mTLS using Java SPIFFE  //////////////
+        System.out.println("Creating X509 source");
         X509Source x509Source = DefaultX509Source.newSource();
+        System.out.println("X509 DONE!");
+
         KeyManager keyManager = new SpiffeKeyManager(x509Source);
         TrustManager trustManager = new SpiffeTrustManager(x509Source);
 

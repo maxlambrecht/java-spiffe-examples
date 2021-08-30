@@ -1,6 +1,3 @@
-import org.gradle.internal.os.OperatingSystem
-gradle.ext.isMacOsX = OperatingSystem.current().isMacOsX()
-
 rootProject.name = 'tasks-app'
 include 'frontend'
 include 'backend'

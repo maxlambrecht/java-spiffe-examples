@@ -1,5 +1,8 @@
 
-apply plugin: 'java'
+plugins {
+    id 'java'
+    id 'com.google.osdetector' version '1.6.2'
+}
 
 repositories {
     mavenCentral()
@@ -9,8 +12,9 @@ sourceCompatibility = JavaVersion.VERSION_14
 targetCompatibility = JavaVersion.VERSION_14
 
 ext {
-    grpcVersion = '1.31.1'
+    grpcVersion = '1.37.0'
     protobufProtocVersion = '3.12.0'
+    lombokVersion = '1.18.20'
 }
 
 dependencies {
@@ -20,6 +24,10 @@ dependencies {
 
 subprojects {
     apply plugin: 'java'
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
 
     group 'com.example'
     version '0.1'
@@ -37,11 +45,6 @@ subprojects {
         }
     }
 
-    ext {
-        grpcVersion = '1.31.1'
-        lombokVersion = '1.18.12'
-    }
-
     dependencies {
         implementation group: 'io.grpc', name: 'grpc-netty', version: "${grpcVersion}"
         implementation group: 'io.grpc', name: 'grpc-protobuf', version: "${grpcVersion}"
@@ -51,10 +54,12 @@ subprojects {
         compileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
         annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
         
-        implementation group: 'io.spiffe', name: 'java-spiffe-provider', version: '0.6.2'
+        implementation group: 'io.spiffe', name: 'java-spiffe-provider', version: '0.6.3'
 
-        if (gradle.ext.isMacOsX) {
-            runtimeOnly group: 'io.spiffe', name: 'grpc-netty-macos', version: '0.6.2'
+        if (osdetector.os.is('osx')) {
+            runtimeOnly group: 'io.spiffe', name: 'grpc-netty-macos', version: '0.6.3'
+        } else {
+            runtimeOnly group: 'io.spiffe', name: 'grpc-netty-linux', version: '0.6.3'
         }
     }
 }

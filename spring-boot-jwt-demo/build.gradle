@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.3.3.RELEASE'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
+    id 'com.google.osdetector' version '1.6.2'
 }
 
 repositories {
@@ -26,13 +27,15 @@ subprojects {
     dependencies {
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
         implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
-        compileOnly group: 'org.projectlombok', name: 'lombok', version: "1.18.12"
-        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "1.18.12"
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: "1.18.20"
+        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "1.18.20"
 
-        implementation group: 'io.spiffe', name: 'java-spiffe-core', version: '0.6.1'
+        implementation group: 'io.spiffe', name: 'java-spiffe-core', version: '0.6.3'
 
-        if (gradle.ext.isMacOsX) {
-            runtimeOnly group: 'io.spiffe', name: 'grpc-netty-macos', version: '0.6.2'
+        if (osdetector.os.is('osx')) {
+            runtimeOnly group: 'io.spiffe', name: 'grpc-netty-macos', version: '0.6.3'
+        } else {
+            runtimeOnly group: 'io.spiffe', name: 'grpc-netty-linux', version: '0.6.3'
         }
     }
 }
