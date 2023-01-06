@@ -46,11 +46,17 @@ public class RestOperationsTlsConfig {
                 .build();
     }
 
+
+    @Bean
+    Supplier<Set<SpiffeId>> acceptedSpiffeIds() {
+        return () -> Collections.singleton(SpiffeId.parse("spiffe://example.org/myservice"));
+    }
+
     @Bean
     SSLContext sslContext(X509Source x509Source, Supplier<Set<SpiffeId>> acceptedSpiffeIds) throws KeyManagementException, NoSuchAlgorithmException {
         SslContextOptions options = SslContextOptions.builder()
                 .x509Source(x509Source)
-                .acceptAnySpiffeId()
+                .acceptedSpiffeIdsSupplier(acceptedSpiffeIds)
                 .build();
         return SpiffeSslContextFactory.getSslContext(options);
     }
