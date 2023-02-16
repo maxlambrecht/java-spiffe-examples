@@ -2,5 +2,6 @@
 dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
 
-    implementation group: 'com.h2database', name: 'h2'
+    runtimeOnly group: 'com.oracle.database.jdbc', name: 'ojdbc10', version: '19.18.0.0'
+    implementation group: 'com.oracle.database.jdbc', name: 'ucp', version: '19.18.0.0'
 }
