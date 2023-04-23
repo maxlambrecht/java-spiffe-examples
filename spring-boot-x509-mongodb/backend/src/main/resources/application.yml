@@ -1,0 +1,11 @@
+server:
+  port: 8000
+
+  # enable mTLS using the Spiffe Provider
+  ssl:
+    key-store-type: Spiffe
+    key-store:    # required properties, although they have no value
+    key-store-password:
+
+    # validate client (mutual-authenticated TLS)
+    client-auth: need

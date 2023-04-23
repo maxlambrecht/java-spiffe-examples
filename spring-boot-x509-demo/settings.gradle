@@ -1,4 +1,4 @@
-rootProject.name = 'tasks-app'
+rootProject.name = 'spring-boot-x509-demo'
 include 'frontend'
 include 'backend'
 

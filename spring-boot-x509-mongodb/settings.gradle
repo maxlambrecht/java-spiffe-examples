@@ -1,0 +1,3 @@
+rootProject.name = 'spring-boot-x509-mongodb'
+include 'frontend'
+include 'backend'
