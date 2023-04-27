@@ -8,4 +8,4 @@ ssl.KeyManagerFactory.algorithm=Spiffe
 ssl.TrustManagerFactory.algorithm=Spiffe
 
 # list of accepted SPIFFE IDs
-ssl.spiffe.accept=spiffe://example.org/myservice, spiffe://example.org/dbserver
+ssl.spiffe.accept=spiffe://example.org/myservice|spiffe://example.org/dbserver
